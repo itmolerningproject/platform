@@ -1,0 +1,11 @@
+../.idea
+*.iml
+/data
+web-data/backend/static/
+web-data/odoo/.local
+.*_history
+**/__pycache__
+**/Odoo/sessions/
+traefik
+strapi-dump
+tmp

@@ -1,0 +1,73 @@
+version: "3.6"
+
+services:
+
+  adguard-home:
+    container_name: adguard-home
+    image: adguard/adguardhome
+    volumes:
+     - ./data/adguard-home/work:/opt/adguardhome/work
+     - ./data/adguard-home/conf:/opt/adguardhome/conf
+    ports:
+      - 3080:80/tcp
+      - 3443:443/tcp
+      - 853:853/tcp
+      - 3223:3000/tcp
+      - 5449:5443/tcp
+    network_mode: "bridge"
+    
+  nginxm:
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: unless-stopped
+    ports:
+      - '8081:80'
+      - '81:81'
+      - '443:443'
+    volumes:
+      - ./data/nginxm/data:/data
+      - ./data/nginxm/letsencrypt:/etc/letsencrypt
+
+
+  odoo16:
+    restart: always
+    container_name: odoo16
+    image: ghcr.io/itmo0project0management/odoo:16.0
+    command: -u learning_projects -d odoo
+    volumes:
+      - ./data/odoo:/var/lib/odoo
+      - ./config/odoo.conf:/etc/odoo/odoo.conf
+      - ./addons:/mnt/extra-addons
+    ports:
+      - "80:8069"
+
+  postgres13:
+    restart: always
+    container_name: postgres
+    image: postgres:13
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_PASSWORD: "WLgxqy4gy94HrJB6LSma"
+      POSTGRES_USER: "odoo"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - ./data/pgdata:/var/lib/postgresql/data/pgdata
+
+  pgadmin:
+    restart: always
+    image: dpage/pgadmin4:6.4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@email.com
+      PGADMIN_DEFAULT_PASSWORD: 9tkgWIxz3nknyoIlBQYL
+
+  maildev:
+    restart: always
+    container_name: maildev
+    image: maildev/maildev:latest
+
+networks:
+  default:
+    name: new_network
+
+
+
+    

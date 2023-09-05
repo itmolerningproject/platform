@@ -1,0 +1,97 @@
+version: '3.4'
+
+services:
+  vpn:
+    image: dperson/openvpn-client
+    # cap_add, security_opt, and volume required for the image to function
+    cap_add:
+      - net_admin
+    environment:
+      TZ: 'EST5EDT'
+    networks:
+      - default
+    # if using '-d' or 'DNS' you can't enable the `read_only: true` option
+    read_only: true
+    tmpfs:
+      - /run
+      - /tmp
+    restart: unless-stopped
+    security_opt:
+      - label:disable
+    stdin_open: true
+    tty: true
+    volumes:
+      - /dev/net:/dev/net:z
+    # Put .ovpn configuration file in the /vpn directory (in "volumes:" above or
+    # launch using the command line arguments, IE pick one:
+      - ./vpn:/vpn
+    command: 'server;user;password[;port]'
+
+  
+  odoo16:
+    depends_on:
+      - vpn
+    environment:
+      TZ: 'EST5EDT'
+    network_mode: "odoo16:vpn"
+    stdin_open: true
+    tty: true
+    restart: always
+    container_name: odoo16
+    image: odoo:16.0
+    command: -u learning_projects -d odoo
+    volumes:
+      - ./data/odoo:/var/lib/odoo
+      - ./config/odoo.conf:/etc/odoo/odoo.conf
+
+  postgres13:
+    depends_on:
+      - vpn
+    network_mode: "postgres13:vpn"
+    stdin_open: true
+    tty: true
+    container_name: postgres
+    image: postgres:13
+    environment:
+      TZ: 'EST5EDT'
+      POSTGRES_DB: "postgres"
+      POSTGRES_PASSWORD: "WLgxqy4gy94HrJB6LSma"
+      POSTGRES_USER: "odoo"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - ./data/pgdata:/var/lib/postgresql/data/pgdata
+
+  pgadmin:
+    restart: always
+    image: dpage/pgadmin4:6.4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@email.com
+      PGADMIN_DEFAULT_PASSWORD: 9tkgWIxz3nknyoIlBQYL
+
+  web:
+    image: dperson/nginx
+    depends_on:
+      - odoo16
+    environment:
+      TZ: 'EST5EDT'
+    links:
+      - vpn:odoo16
+    networks:
+      - default
+    ports:
+      - "80:80"
+      - "443:443"
+    read_only: true
+    tmpfs:
+      - /run
+      - /tmp
+      - /var/cache/nginx
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    command: -w "http://odoo16:8069;/service1"
+    # service1 shares the network stack of vpn. The service can by reached using
+    # the name of the service as a hostname.
+
+networks:
+  default:

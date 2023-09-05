@@ -1,0 +1,25 @@
+name,number_groups,login,academic_degree, ear,  Groups,password
+master1, В7897,master1@lp.com,master,2023,Learning projects / Master,admin
+master2, В7898,master2@lp.com,master,2023,Learning projects / Master,admin
+master3, В7899,master3@lp.com,master,2023,Learning projects / Master,admin
+master4, В7900,master4@lp.com,master,2023,Learning projects / Master,admin
+master5, В7901,master5@lp.com,master,2023,Learning projects / Master,admin
+master6, В7902,master6@lp.com,master,2023,Learning projects / Master,admin
+bachelor1, В7903,bachelor1@lp.com,bachelor,2023,Learning projects / Bachelor,admin
+bachelor2, В7904,bachelor2@lp.com,bachelor,2023,Learning projects / Bachelor,admin
+bachelor3, В7905,bachelor3@lp.com,bachelor,2023,Learning projects / Bachelor,admin
+bachelor4, В7906,bachelor4@lp.com,bachelor,2023,Learning projects / Bachelor,admin
+bachelor5, В7907,bachelor5@lp.com,bachelor,2023,Learning projects / Bachelor,admin
+bachelor6, В7908,bachelor6@lp.com,bachelor,2023,Learning projects / Bachelor,admin
+lecturer1,,,,2023,Learning projects / Lecturer,admin
+lecturer2,,,,2023,Learning projects / Lecturer,admin
+lecturer3,,,,2023,Learning projects / Lecturer,admin
+lecturer4,,,,2023,Learning projects / Lecturer,admin
+lecturer5,,,,2023,Learning projects / Lecturer,admin
+lecturer6,,,,2023,Learning projects / Lecturer,admin
+admin1,,,,2023,Learning projects / Admin,admin
+admin2,,,,2023,Learning projects / Admin,admin
+admin3,,,,2023,Learning projects / Admin,admin
+admin4,,,,2023,Learning projects / Admin,admin
+admin5,,,,2023,Learning projects / Admin,admin
+admin6,,,,2023,Learning projects / Admin,admin

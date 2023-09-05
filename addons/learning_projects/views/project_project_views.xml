@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_form_project_project" model="ir.ui.view">
+        <field name="name">Project Form</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="model">project.project</field>
+        <field name="arch" type="xml">
+            <xpath expr="//form/header" position="replace">
+                <button string="Open tasks" name="action_view_tasks" type="object" class="btn-primary o_open_tasks" data-hotkey="q"/>
+            </xpath>
+            <xpath expr="//group/group/field[@name='tag_ids']" position="after">
+                <field name="status"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>
