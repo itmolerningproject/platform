@@ -1,3 +1,4 @@
 Платформа управления учебными проектами LP
 
-- [Import Uesrs](https://gitlab.infra.escalibre.net/garentii/platform/-/wikis/Supported-browsers)
+- [Import Users](https://github.com/itmolerningproject/platform/edit/main/wiki/import_uesrs.md))
+- [GithubDockerContainerRegistry](https://github.com/itmolerningproject/platform/edit/main/wiki/github_docker_registry.md)

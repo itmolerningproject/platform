@@ -1,2 +1,2 @@
-FROM ghcr.io/itmo0project0management/odoo:16.0
+FROM ghcr.io/itmolerningproject/odoo16:latest
 COPY ./addons/ /mnt/extra-addons/

@@ -1,0 +1,36 @@
+name: Docker Compose Deployment
+
+#on:
+#  push:
+#    branches: [development]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Deploy to server
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        password: ${{ secrets.SSH_PASSWORD }}
+        script: |
+          #set -a
+          
+          cd /home
+          #gh repo clone itmo0project0management/platform
+          #export CR_PAT=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
+          #echo $CR_PAT | docker login ghcr.io -u USERNAME --password-stdin
+          #docker pull ghcr.io/itmo0project0management/odoo:16.0
+          
+          #docker inspect 
+          cd platform/
+          git pull
+          #git pull master
+          ./envs/test.env
+          docker-compose -f docker-compose.test.yml pull
+          docker-compose -f docker-compose.test.yml down
+          docker-compose -f docker-compose.test.yml up -d
+          #docker compose --env-file envs/test.env up
+          #docker compose restart odoo16

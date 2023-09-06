@@ -4,7 +4,7 @@ services:
   odoo16:
     restart: always
     container_name: odoo16
-    image: ghcr.io/itmo0project0management/odoo:16.0
+    image: ghcr.io/itmolerningproject/odoo16:latest
     ports:
       - "80:8069"
     networks:

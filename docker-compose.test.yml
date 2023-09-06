@@ -16,7 +16,7 @@ services:
     image: hwdsl2/ipsec-vpn-server
     restart: always
     env_file:
-      - ./config/vpn.env
+      - ./config/vpn.test.env
     ports:
       - "500:500/udp"
       - "4500:4500/udp"
@@ -31,7 +31,7 @@ services:
   odoo:
     restart: always
     container_name: odoo
-    image: ghcr.io/itmo0project0management/odoo:16.0
+    image: ghcr.io/itmolerningproject/odoo16:latest
     command: -u learning_projects -d odoo
     volumes:
       - ./data/odoo:/var/lib/odoo
@@ -63,7 +63,7 @@ services:
     container_name: maildev
     image: maildev/maildev:latest
     environment:
-      HOSTNAMES: maildev.itmo-learning-projects.ru
+      HOSTNAMES: maildev.test.itmo-learning-projects.ru
     
   dps:
     image: defreitas/dns-proxy-server
@@ -72,7 +72,7 @@ services:
       - /etc/resolv.conf:/etc/resolv.conf
     environment:
       - MG_LOG_LEVEL=ERROR
-    hostname: dns.itmo-learning-projects.ru
+    hostname: dns.test.itmo-learning-projects.ru
     networks:
       default:
         ipv4_address: 172.177.0.10
