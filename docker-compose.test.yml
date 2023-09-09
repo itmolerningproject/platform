@@ -5,8 +5,8 @@ services:
     image: 'jc21/nginx-proxy-manager:latest'
     restart: unless-stopped
     ports:
-      - '80:80'
-      - '81:81'
+      #- '80:80'
+      #- '81:81'
       - '443:443'
     volumes:
       - ./data/nginxm/data:/data
@@ -16,7 +16,7 @@ services:
     image: hwdsl2/ipsec-vpn-server
     restart: always
     env_file:
-      - ./config/vpn.test.env
+      - ./config/vpn_test.env
     ports:
       - "500:500/udp"
       - "4500:4500/udp"
@@ -54,7 +54,7 @@ services:
     restart: always
     image: dpage/pgadmin4:6.4
     environment:
-      HOSTNAMES: pgadmin.itmo-learning-projects.ru
+      HOSTNAMES: pgadmin.test.itmo-learning-projects.ru
       PGADMIN_DEFAULT_EMAIL: pgadmin@email.com
       PGADMIN_DEFAULT_PASSWORD: 9tkgWIxz3nknyoIlBQYL
 

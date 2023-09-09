@@ -21,8 +21,8 @@ source ./envs/$ENVIRONMENT.env or . ./envs/$ENVIRONMENT.env
 echo $CR_PAT | docker login ghcr.io -u "itmolerningproject@gmail.com" --password-stdin
 
 
-docker-compose -f docker-compose.$(ENVIRONMENT).yml pull
-docker-compose -f docker-compose.$(ENVIRONMENT).yml up -d
+docker-compose -f docker-compose.$ENVIRONMENT.yml pull
+docker-compose -f docker-compose.$ENVIRONMENT.yml up -d
 ```
 
 git checkout development
