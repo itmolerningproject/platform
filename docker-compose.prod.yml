@@ -16,7 +16,7 @@ services:
     image: hwdsl2/ipsec-vpn-server
     restart: always
     env_file:
-      - ./config/vpn.prod.env
+      - ./config/vpn_prod.env
     ports:
       - "500:500/udp"
       - "4500:4500/udp"
@@ -35,8 +35,8 @@ services:
     command: -u learning_projects -d odoo
     volumes:
       - ./data/odoo:/var/lib/odoo
-        - ./config/odoo.prod.conf:/etc/odoo/odoo.conf
-        - ./addons:/mnt/extra-addons
+      - ./config/odoo.prod.conf:/etc/odoo/odoo.conf
+      - ./addons:/mnt/extra-addons
 
   postgres:
     restart: always
@@ -57,6 +57,8 @@ services:
       HOSTNAMES: pgadmin.itmo-learning-projects.ru
       PGADMIN_DEFAULT_EMAIL: pgadmin@email.com
       PGADMIN_DEFAULT_PASSWORD: 9tkgWIxz3nknyoIlBQYL
+    volumes:
+      - ./config/pgadmin-servers.${ENVIRONMENT}.json:/pgadmin4/servers.json
 
   maildev:
     restart: always

@@ -57,6 +57,8 @@ services:
       HOSTNAMES: pgadmin.test.itmo-learning-projects.ru
       PGADMIN_DEFAULT_EMAIL: pgadmin@email.com
       PGADMIN_DEFAULT_PASSWORD: 9tkgWIxz3nknyoIlBQYL
+    volumes:
+      - ./config/pgadmin-servers.${ENVIRONMENT}.json:/pgadmin4/servers.json
 
   maildev:
     restart: always
