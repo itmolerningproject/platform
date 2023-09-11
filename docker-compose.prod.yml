@@ -58,14 +58,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: pgadmin@email.com
       PGADMIN_DEFAULT_PASSWORD: 9tkgWIxz3nknyoIlBQYL
     volumes:
-      - ./config/pgadmin-servers.${ENVIRONMENT}.json:/pgadmin4/servers.json
-
-  maildev:
-    restart: always
-    container_name: maildev
-    image: maildev/maildev:latest
-    environment:
-      HOSTNAMES: maildev.itmo-learning-projects.ru
+      - ./config/pgadmin-servers.prod.json:/pgadmin4/servers.json
 
   dps:
     image: defreitas/dns-proxy-server

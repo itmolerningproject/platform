@@ -23,6 +23,7 @@
         'views/lp_resume_views.xml',
         'views/lp_invitation_bachelor_views.xml',
         'views/lp_interest_views.xml',
+        'views/res_users_views.xml',
         'views/lp_menu.xml',
     ],
     'application': True,
