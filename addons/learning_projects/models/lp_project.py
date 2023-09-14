@@ -24,7 +24,7 @@ status_with_stage_id = {
 class LpProject(models.Model):
     _name = 'lp.project'
     _inherit = ['mail.thread']
-    _description = 'Project D'
+    _description = 'LP Project'
 
     # Project info
     name = fields.Char(string="Название проекта", tracking=True, required=True)

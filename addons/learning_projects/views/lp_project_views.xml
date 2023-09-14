@@ -14,8 +14,7 @@
                                 attrs="{'invisible': [('status', '!=', 'Unconfirmed')]}" groups="learning_projects.lp_group_master, learning_projects.lp_group_admin "/>
                         <button name="confirm_project" string="Confirm project" type="object"
                                 attrs="{'invisible': [('status', '!=', 'OnApproval')]}" groups="learning_projects.lp_group_lecturer, learning_projects.lp_group_admin "/>
-                        <button name="action_view_tasks" string="Открыть канбан-доску" type="object" invisible="True"
-                                context="{'id': project}"/>
+                        <button name="action_view_tasks" string="Открыть канбан-доску" type="object" invisible="True" context="{'id': project}"/>
                     </header>
                     <sheet>
                         <field name="logo" widget="image" class="oe_avatar"/>

@@ -36,7 +36,12 @@ status_with_stage_id = {
 
 lp_project = env['lp.project'].search([('project', '=', project_id)])
 if lp_project:
-  lp_project.write({'status':status_with_stage_id.get(stage_id)})
+  if status_with_stage_id.get(stage_id) == "OnApproval":
+    partner = env['res.users'].browse(env.uid).partner_id
+    lp_project.write({'status':status_with_stage_id.get(stage_id),
+                      'confirmed_id': partner.id})
+  else:
+    lp_project.write({'status':status_with_stage_id.get(stage_id))
 
         </field>
     </record>

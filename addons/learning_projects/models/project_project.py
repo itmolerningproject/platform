@@ -32,7 +32,6 @@ class Project(models.Model):
 
     @api.model
     def create(self, vals):
-        # Сделать ограничение на создание для магистров
         return super(Project, self).create(vals)
 
     def write(self, vals):

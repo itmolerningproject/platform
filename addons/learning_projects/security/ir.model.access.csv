@@ -18,7 +18,7 @@ access_lp_project_master,access.lp.project,model_lp_project,lp_group_master,1,1,
 access_lp_invitation_bachelor_master,access.lp.invitation.bachelor,model_lp_invitation_bachelor,lp_group_master,1,1,0,0
 access_lp_resume_master,access.lp.resume,model_lp_resume,lp_group_master,1,0,0,0
 access_lp_interest_master,access.lp.interest,model_lp_interest,lp_group_master,1,1,1,0
-access_lp_project_lecturer,access.lp.project,model_lp_project,lp_group_lecturer,1,0,0,0
+access_lp_project_lecturer,access.lp.project,model_lp_project,lp_group_lecturer,1,1,0,0
 access_lp_interest_lecturer,access.lp.interest,model_lp_interest,lp_group_lecturer,1,1,1,0
 access_lp_resume_lecturer,access.lp.resume,model_lp_resume,lp_group_lecturer,1,0,0,0
 access_lp_invitation_bachelor_lecturer,access.lp.invitation.bachelor,model_lp_invitation_bachelor,lp_group_lecturer,1,0,0,0
