@@ -50,28 +50,9 @@ class HideMenuUser(models.Model):
         self.clear_caches()
         return res
 
-    def _get_is_admin(self):
-        """
-        The Hide specific menu tab will be hidden for the Admin user form.
-        Else once the menu is hidden, it will be difficult to re-enable it.
-        """
-        for rec in self:
-            rec.is_admin = False
-            if rec.id == self.env.ref('base.user_admin').id:
-                rec.is_admin = True
-
-    def _get_is_master(self):
-        for rec in self:
-            group_external_ids = rec.get_group_external_ids()
-            rec.is_master = False
-            if 'Master' in group_external_ids:
-                rec.is_master = True
-
     hide_menu_ids = fields.Many2many('ir.ui.menu', string="Menu", store=True,
                                      help='Select menu items that needs to be '
                                           'hidden to this user ')
-    is_admin = fields.Boolean(compute=_get_is_admin)
-    is_master = fields.Boolean(compute=_get_is_master)
 
     # @api.multi
     def get_group_external_ids(self):

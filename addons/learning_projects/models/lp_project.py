@@ -58,7 +58,9 @@ class LpProject(models.Model):
     @api.model
     def create(self, vals):
         self.validate_count_creations()
-        return super(LpProject, self).create(vals)
+        lp = super(LpProject, self).create(vals)
+        lp.author.sudo().write({'in_project': True, 'lp_project_id': lp.id})
+        return lp
 
     def write(self, vals):
         return super(LpProject, self).write(vals)

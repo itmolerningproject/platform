@@ -36,7 +36,16 @@
                             <field name="email" widget="email" context="{'gravatar_image': True}" attrs="{'required': [('user_ids','!=', [])]}"/>
                             <field name="number_groups" groups="learning_projects.lp_group_master,learning_projects.lp_group_bachelor"/>
                             <field name="lang" attrs="{'invisible': [('active_lang_count', '&lt;=', 1)]}"/>
+                        </group>
+                        <group string="Проект">
                             <field name="in_project"/>
+                            <field name="lp_project_id"/>
+                        </group>
+                        <group string="Роли">
+                            <field name="is_admin"/>
+                            <field name="is_master"/>
+                            <field name="is_bachelor"/>
+                            <field name="is_lecturer"/>
                         </group>
                     </group>
                 </xpath>
@@ -114,6 +123,17 @@
                     <field name="country_id" invisible="1"/>
                 </field>
 
+            </field>
+        </record>
+
+        <record id="action_nocontent_res_partner" model="ir.actions.act_window">
+            <field name="name">Пользователи</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    You haven't created any projects yet.
+                </p>
             </field>
         </record>
 

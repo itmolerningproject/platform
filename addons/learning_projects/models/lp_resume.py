@@ -12,7 +12,7 @@ class Resume(models.Model):
     _inherit = ['mail.thread']
     _description = 'Resume'
 
-    author = fields.Many2one('res.partner', string="Автор", compute='compute_author', readonly=True)
+    author = fields.Many2one('res.partner', string="Автор", compute='_compute_author', readonly=True)
     name = fields.Char(related='author.name', string="ФИО", tracking=True, readonly=True)
     group = fields.Char(related='author.number_groups', string="Группа", tracking=True, readonly=True)
     short_description = fields.Text(string="О себе", tracking=True)
@@ -20,7 +20,7 @@ class Resume(models.Model):
     areas_of_interest = fields.Many2many('lp.interest', string='Области интересов', tracking=True)
 
     @api.depends('author')
-    def compute_author(self):
+    def _compute_author(self):
         for rec in self:
             author = self.env['res.users'].browse(rec.create_uid.id).partner_id
             rec.author = author.id

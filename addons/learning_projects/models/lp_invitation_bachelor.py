@@ -111,7 +111,7 @@ class InvitationBachelor(models.Model):
         new_current_value_users = lp_p.current_value_users + 1
         lp_p.write({'current_value_users': new_current_value_users})
 
-        self.resume_author.sudo().write({'in_project': True})
+        self.resume_author.sudo().write({'in_project': True, 'lp_project_id': lp_p.id})
 
         self.write({
             'invited_status': 'invited',
