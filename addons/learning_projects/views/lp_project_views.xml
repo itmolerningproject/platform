@@ -11,10 +11,12 @@
                         <field name="status" invisible="True"/>
                         <field name="project" invisible="True"/>
                         <button name="send_confirm_project" string="Send confirm" type="object"
-                                attrs="{'invisible': [('status', '!=', 'Unconfirmed')]}" groups="learning_projects.lp_group_master, learning_projects.lp_group_admin "/>
+                                attrs="{'invisible': [('status', '!=', 'Unconfirmed')]}" groups="learning_projects.lp_group_master, learning_projects.lp_group_admin"/>
                         <button name="confirm_project" string="Confirm project" type="object"
-                                attrs="{'invisible': [('status', '!=', 'OnApproval')]}" groups="learning_projects.lp_group_lecturer, learning_projects.lp_group_admin "/>
+                                attrs="{'invisible': [('status', '!=', 'OnApproval')]}" groups="learning_projects.lp_group_lecturer, learning_projects.lp_group_admin"/>
                         <button name="action_view_tasks" string="Открыть канбан-доску" type="object" invisible="True" context="{'id': project}"/>
+                        <button name="action_team_is_ready" string="Готовы к защите" type="object" attrs="{'invisible': [('status', '!=', 'Teamwork')]}"
+                        groups="learning_projects.lp_group_master, learning_projects.lp_group_admin"/>
                     </header>
                     <sheet>
                         <field name="logo" widget="image" class="oe_avatar"/>
@@ -38,6 +40,7 @@
                             <field name="confirmed_id"/>
                             <field name="current_value_users"/>
                             <field name="max_col_users"/>
+                            <field name="is_all_invited"/>
                             <field name="status"/>
                         </group>
                         <notebook>

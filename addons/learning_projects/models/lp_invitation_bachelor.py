@@ -115,7 +115,7 @@ class InvitationBachelor(models.Model):
 
         self.write({
             'invited_status': 'invited',
-            'invited_by': self.env.uid,
+            'invited_by': self.env['res.users'].browse(self.env.uid).partner_id,
         })
 
         invitation = self.env['lp.invitation.bachelor'].search([('resume_author', '=', resume_author), ('id', '!=', self.id)], limit=1)

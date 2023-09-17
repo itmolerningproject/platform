@@ -16,10 +16,10 @@
                     </header>
                     <sheet>
                         <group string="Информация о студенте">
-                            <field name="priority"/>
-                            <field name="project_id"/>
-                            <field name="resume"/>
-                            <field name="resume_author"/>
+                            <field name="priority" attrs="{'readonly':[('invited_status','!=','draft')]}"/>
+                            <field name="project_id" attrs="{'readonly':[('invited_status','!=','draft')]}"/>
+                            <field name="resume" attrs="{'readonly':[('invited_status','!=','draft')]}"/>
+                            <field name="resume_author" attrs="{'readonly':[('invited_status','!=','draft')]}"/>
                         </group>
                     </sheet>
                     <div class="oe_chatter">
@@ -35,11 +35,11 @@
             <field name="model">lp.invitation.bachelor</field>
             <field name="arch" type="xml">
                 <tree string="Own Invitations Tree">
-                    <field name="priority" widget="handle"/>
-                    <field name="project_id"/>
-                    <field name="resume"/>
-                    <field name="number_groups"/>
-                    <field name="invited_status"/>
+                    <field name="priority" widget="handle" attrs="{'readonly':[('invited_status','!=','draft')]}"/>
+                    <field name="project_id" attrs="{'readonly':[('invited_status','!=','draft')]}"/>
+                    <field name="resume" attrs="{'readonly':[('invited_status','!=','draft')]}"/>
+                    <field name="number_groups" attrs="{'readonly':[('invited_status','!=','draft')]}"/>
+                    <field name="invited_status" attrs="{'readonly':[('invited_status','!=','draft')]}"/>
                 </tree>
             </field>
         </record>

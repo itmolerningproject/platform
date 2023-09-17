@@ -35,7 +35,7 @@ class Project(models.Model):
         return super(Project, self).create(vals)
 
     def write(self, vals):
-        if self.env.user.is_master and vals.get('stage_id'):
+        if (self.env.user.is_master and vals.get('stage_id') == int(odoo_conf['project_stage_3_id'])) or (self.env.user.is_master and vals.get('stage_id') == int(odoo_conf['project_stage_6_id'])):
             raise ValidationError("Это может сделать только преподаватель")
         return super(Project, self).write(vals)
 
