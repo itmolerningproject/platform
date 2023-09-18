@@ -35,7 +35,7 @@ services:
     command: -u learning_projects -d odoo
     volumes:
       - ./data/odoo:/var/lib/odoo
-      - /odoo/backups:/odoo/backups
+      - ./odoo/backups:/odoo/backups
       - ./config/odoo.test.conf:/etc/odoo/odoo.conf
       - ./addons:/mnt/extra-addons
 
