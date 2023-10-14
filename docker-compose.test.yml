@@ -11,6 +11,12 @@ services:
     volumes:
       - ./data/nginxm/data:/data
       - ./data/nginxm/letsencrypt:/etc/letsencrypt
+    environment:
+      HOSTNAMES: nginx.test.itmo-learning-projects.ru
+    depends_on:
+      - odoo
+      - vpn
+      - dps
 
   vpn:
     image: hwdsl2/ipsec-vpn-server
@@ -40,16 +46,16 @@ services:
       - ./addons:/mnt/extra-addons
 
   postgres:
-      restart: always
-      container_name: postgres
-      image: postgres:13
-      environment:
-        POSTGRES_DB: "postgres"
-        POSTGRES_PASSWORD: "WLgxqy4gy94HrJB6LSma"
-        POSTGRES_USER: "odoo"
-        PGDATA: "/var/lib/postgresql/data/pgdata"
-      volumes:
-        - ./data/pgdata:/var/lib/postgresql/data/pgdata
+    restart: always
+    container_name: postgres
+    image: postgres:13
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_PASSWORD: "WLgxqy4gy94HrJB6LSma"
+      POSTGRES_USER: "odoo"
+      PGDATA: "/var/lib/postgresql/data/pgdata"
+    volumes:
+      - ./data/pgdata:/var/lib/postgresql/data/pgdata
 
   pgadmin:
     restart: always
@@ -60,6 +66,10 @@ services:
       PGADMIN_DEFAULT_PASSWORD: 9tkgWIxz3nknyoIlBQYL
     volumes:
       - ./config/pgadmin-servers.${ENVIRONMENT}.json:/pgadmin4/servers.json
+    depends_on:
+      - vpn
+      - dps
+
 
   maildev:
     restart: always
@@ -67,7 +77,10 @@ services:
     image: maildev/maildev:latest
     environment:
       HOSTNAMES: maildev.test.itmo-learning-projects.ru
-    
+    depends_on:
+      - vpn
+      - dps
+
   dps:
     image: defreitas/dns-proxy-server
     volumes:
@@ -79,6 +92,8 @@ services:
     networks:
       default:
         ipv4_address: 172.177.0.10
+    depends_on:
+      - vpn
 
 networks:
   default:

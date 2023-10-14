@@ -8,9 +8,16 @@ services:
       #- '80:80'
       #- '81:81'
       - '443:443'
+    environment:
+      HOSTNAMES: nginx.itmo-learning-projects.ru
     volumes:
       - ./data/nginxm/data:/data
       - ./data/nginxm/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - odoo
+      - vpn
+      - dps
+
 
   vpn:
     image: hwdsl2/ipsec-vpn-server
@@ -27,6 +34,8 @@ services:
     container_name: ipsec-vpn-server
     volumes:
       - /lib/modules:/lib/modules:ro
+    depends_on:
+      - dps
 
   odoo:
     restart: always
@@ -37,6 +46,10 @@ services:
       - ./data/odoo:/var/lib/odoo
       - ./config/odoo.prod.conf:/etc/odoo/odoo.conf
       - ./addons:/mnt/extra-addons
+    depends_on:
+      - vpn
+      - dps
+
 
   postgres:
     restart: always
@@ -49,6 +62,10 @@ services:
       PGDATA: "/var/lib/postgresql/data/pgdata"
     volumes:
       - ./data/pgdata:/var/lib/postgresql/data/pgdata
+    depends_on:
+      - vpn
+      - dps
+
 
   pgadmin:
     restart: always
@@ -59,6 +76,9 @@ services:
       PGADMIN_DEFAULT_PASSWORD: 9tkgWIxz3nknyoIlBQYL
     volumes:
       - ./config/pgadmin-servers.prod.json:/pgadmin4/servers.json
+    depends_on:
+      - vpn
+      - dps
 
   dps:
     image: defreitas/dns-proxy-server
@@ -71,6 +91,8 @@ services:
     networks:
       default:
         ipv4_address: 172.177.0.10
+    depends_on:
+      - vpn
 
 networks:
   default:
