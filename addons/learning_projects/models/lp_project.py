@@ -15,12 +15,12 @@ PROJECT_STATUS = [
 class LpProject(models.Model):
     _name = 'lp.project'
     _inherit = ['mail.thread']
-    _description = 'LP Project'
+    _description = 'Учебные проекты'
 
     # Project info
     name = fields.Char(string='Название проекта', tracking=True, required=True)
-    short_description = fields.Text(string='Описание проекта', tracking=True)
-    description = fields.Text(string='Необходимые участники команды (Пример: backend, 2 frontend, ML)', tracking=True)
+    description = fields.Html(string='Описание проекта', sanitize_attributes=False, tracking=True, required=True)
+    required_participants = fields.Html(string='Необходимые участники', sanitize_attributes=False, tracking=True, required=True)
     logo = fields.Image(string='Project logo')
 
     status = fields.Selection(PROJECT_STATUS, string='Статус', readonly=True, tracking=True, default='Unconfirmed')
@@ -39,8 +39,8 @@ class LpProject(models.Model):
 
     # Team
     message_partner_ids = fields.Many2many(related='project.message_partner_ids', string='message_follower_ids', readonly=True, tracking=True)
-    max_col_users = fields.Integer(string='Максимальное количество учасников', default=1, readonly=True, tracking=True)
-    current_value_users = fields.Integer(string='Текущее количество учасников', default=0, readonly=True, tracking=True)
+    max_col_users = fields.Integer(string='Максимальное количество участников', default=6, readonly=True, tracking=True)
+    current_value_users = fields.Integer(string='Текущее количество участников', default=0, readonly=True, tracking=True)
 
     @api.depends('max_col_users', 'current_value_users')
     def _compute_is_all_invited(self):

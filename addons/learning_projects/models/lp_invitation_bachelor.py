@@ -28,7 +28,7 @@ def create_notification(notification_type, title, message):
 
 class InvitationBachelor(models.Model):
     _name = 'lp.invitation.bachelor'
-    _description = 'Invitation Bachelor'
+    _description = 'Приглашения бакалавра'
     _inherit = ['mail.thread']
     _order = 'priority asc'
 

@@ -10,7 +10,6 @@
         'mail',
         'contacts',
         'project',
-        'hide_menu_user',
     ],
     'data': [
         'security/lp_security.xml',
@@ -20,6 +19,9 @@
         'data/automated_actions/project_stage_id_sync_automated_action.xml',
         'data/smtp_maildev_server.xml',
         'views/res_partner_views.xml',
+        'wizards/views/lp_score_master_wizard.xml',
+        'wizards/views/lp_score_lecturer_wizard.xml',
+        'wizards/views/lp_load_document_wizard.xml',
         'views/lp_project_views.xml',
         'views/lp_resume_views.xml',
         'views/lp_invitation_bachelor_views.xml',

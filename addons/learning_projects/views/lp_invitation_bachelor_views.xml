@@ -3,7 +3,7 @@
     <data>
 
         <record id="lp_invitation_bachelor_form" model="ir.ui.view">
-            <field name="name">Invitation bachelor Details</field>
+            <field name="name">Детали приглашения бакалавра</field>
             <field name="model">lp.invitation.bachelor</field>
             <field name="arch" type="xml">
                 <form string="Отклики">
@@ -19,7 +19,7 @@
                             <field name="priority" attrs="{'readonly':[('invited_status','!=','draft')]}"/>
                             <field name="project_id" attrs="{'readonly':[('invited_status','!=','draft')]}"/>
                             <field name="resume" attrs="{'readonly':[('invited_status','!=','draft')]}"/>
-                            <field name="resume_author" attrs="{'readonly':[('invited_status','!=','draft')]}"/>
+                            <field name="resume_author"/>
                         </group>
                     </sheet>
                     <div class="oe_chatter">
@@ -31,7 +31,7 @@
         </record>
 
         <record id="lp_invitation_bachelor_tree" model="ir.ui.view">
-            <field name="name">Invitation bachelor</field>
+            <field name="name">Приглашения бакалавров</field>
             <field name="model">lp.invitation.bachelor</field>
             <field name="arch" type="xml">
                 <tree string="Own Invitations Tree">
@@ -46,7 +46,7 @@
 
 
         <record id="action_nocontent_lp_invitation_bachelor" model="ir.actions.act_window">
-            <field name="name">Invitation bachelor</field>
+            <field name="name">Приглашения бакалавров</field>
             <field name="res_model">lp.invitation.bachelor</field>
             <field name="view_mode">tree,form</field>
             <field name="domain">[('create_uid', '=', uid)]</field>

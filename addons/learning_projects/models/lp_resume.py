@@ -10,12 +10,12 @@ _logger = logging.getLogger(__name__)
 class Resume(models.Model):
     _name = 'lp.resume'
     _inherit = ['mail.thread']
-    _description = 'Resume'
+    _description = 'Резюме'
 
     author = fields.Many2one('res.partner', string="Автор", compute='_compute_author', readonly=True)
     name = fields.Char(related='author.name', string="ФИО", tracking=True, readonly=True)
     group = fields.Char(related='author.number_groups', string="Группа", tracking=True, readonly=True)
-    short_description = fields.Text(string="О себе", tracking=True)
+    short_description = fields.Html(string='О себе', sanitize_attributes=False, tracking=True)
     skills = fields.Many2many('res.partner.category', string='Навыки', tracking=True)
     areas_of_interest = fields.Many2many('lp.interest', string='Области интересов', tracking=True)
 

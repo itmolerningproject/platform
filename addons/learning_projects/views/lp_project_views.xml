@@ -3,11 +3,12 @@
     <data>
 
         <record id="lp_project_form" model="ir.ui.view">
-            <field name="name">Project Management Details</field>
+            <field name="name">Детали управления проектом</field>
             <field name="model">lp.project</field>
             <field name="arch" type="xml">
-                <form string="Project Management Form">
+                <form string="Детали управления проектом">
                     <header>
+                        <field name="id" invisible="True"/>
                         <field name="status" invisible="True"/>
                         <field name="project" invisible="True"/>
                         <button name="send_confirm_project" string="Send confirm" type="object"
@@ -16,32 +17,24 @@
                                 attrs="{'invisible': [('status', '!=', 'OnApproval')]}" groups="learning_projects.lp_group_lecturer, learning_projects.lp_group_admin"/>
                         <button name="action_view_tasks" string="Открыть канбан-доску" type="object" invisible="True" context="{'id': project}"/>
                         <button name="action_team_is_ready" string="Готовы к защите" type="object" attrs="{'invisible': [('status', '!=', 'Teamwork')]}"
-                        groups="learning_projects.lp_group_master, learning_projects.lp_group_admin"/>
+                                groups="learning_projects.lp_group_master, learning_projects.lp_group_admin"/>
+                        <button string="Загрузить отчёт" type="action" name="%(learning_projects.load_document_wizard)d" class="oe_highlight" attrs="{'invisible': [('status', '!=', 'Teamwork')]}"/>
                     </header>
                     <sheet>
                         <field name="logo" widget="image" class="oe_avatar"/>
                         <div class="oe_title">
                             <label for="name" string="Название"/>
                             <h1>
-                                <field name="name" class="o_project_name oe_inline"/>
+                                <field name="name"/>
                             </h1>
                         </div>
                         <group string="Информация по проекту" width="50">
-                            <field name="short_description"/>
-                            <field name="description"/>
+                            <field name="description" type="html" options="{'collaborative': true}" placeholder="Описание..."/>
+                            <field name="required_participants" type="html" options="{'collaborative': true}" placeholder="(Пример: backend: 2, frontend 2,  testing 1)..."/>
                             <field name="author"/>
-                        </group>
-                        <group string="Канбан доска" width="50">
-                            <field name="project"/>
-                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
-                            <field name="stage_id"/>
-                        </group>
-                        <group string="Подтверждения">
-                            <field name="confirmed_id"/>
-                            <field name="current_value_users"/>
-                            <field name="max_col_users"/>
-                            <field name="is_all_invited"/>
                             <field name="status"/>
+                            <field name="max_col_users"/>
+                            <field name="tag_ids" widget="many2many_tags"/>
                         </group>
                         <notebook>
                             <page string="Запросы на участие в проекте">
@@ -52,20 +45,45 @@
                                         <field name="number_groups"/>
                                         <field name="invited_status"/>
                                         <!-- todo hide -->
-                                        <button name="action_confirm_invitation" string="Confirm project" type="object"
+                                        <button name="action_confirm_invitation" string="Утвердить тему проекта" type="object"
                                                 attrs="{'invisible': ['|',('invited_status', '=', 'invited'), ('invited_status',  '=', 'invited_for_other_priority')]}"
                                                 groups="learning_projects.lp_group_master, learning_projects.lp_group_admin "/>
                                     </tree>
                                 </field>
                             </page>
-                            <page string="Команда" groups="learning_projects.lp_group_master">
+                            <page string="Команда" groups="learning_projects.lp_group_master,
+                                                           learning_projects.lp_group_lecturer">
                                 <field name="message_partner_ids">
                                     <tree>
+                                        <field name="id" invisible="True"/>
+                                        <field name="in_project" invisible="True"/>
+                                        <field name="is_bachelor" invisible="True"/>
                                         <field name="name"/>
                                         <field name="academic_degree"/>
                                         <field name="number_groups"/>
+                                        <field name="score_lecturer"/>
+                                        <field name="score_master"/>
+                                        <field name="document_ids"/>
+                                        <button string="Поствавить оценку" type="object" name="action_score_master" class="oe_highlight" groups="learning_projects.lp_group_master"
+                                                attrs="{'invisible': ['&amp;',('document_ids', '!=', False), ('is_bachelor', '!=', True )]}"/>
+                                        <button string="Поствавить оценку" type="object" name="action_score_lecturer" class="oe_highlight" groups="learning_projects.lp_group_lecturer"
+                                                attrs="{'invisible': [('document_ids', '!=', False)]}"/>
                                     </tree>
                                 </field>
+                            </page>
+                            <page string="Дополнительная информация">
+                                <group string="Дополнительная информация">
+                                    <field name="confirmed_id"/>
+                                    <field name="current_value_users"/>
+                                    <field name="max_col_users"/>
+                                    <field name="is_all_invited"/>
+                                </group>
+                            </page>
+                            <page string="Настройки Конбан доски">
+                                <group string="Канбан доска" width="50">
+                                    <field name="project"/>
+                                    <field name="stage_id"/>
+                                </group>
                             </page>
                         </notebook>
                     </sheet>
@@ -78,10 +96,10 @@
         </record>
 
         <record id="lp_project_tree" model="ir.ui.view">
-            <field name="name">Project Management</field>
+            <field name="name">Управления проектом</field>
             <field name="model">lp.project</field>
             <field name="arch" type="xml">
-                <tree string="Project Details Tree">
+                <tree string="Управления проектом Таблица">
                     <field name="name"/>
                     <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
                     <field name="status"/>
@@ -90,14 +108,14 @@
         </record>
 
         <record id="view_lp_project_kanban" model="ir.ui.view">
-            <field name="name">LP Project Kanban</field>
+            <field name="name">Учебные проекты Kanban</field>
             <field name="model">lp.project</field>
             <field name="arch" type="xml">
                 <!-- Add or modify kanban cards here -->
                 <kanban>
                     <field name="logo"/>
                     <field name="name"/>
-                    <field name="short_description"/>
+                    <field name="required_participants" widget="html"/>
                     <field name="author" widget="contact"/>
                     <field name="description"/>
                     <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
@@ -110,15 +128,22 @@
                                 </div>
                                 <div class="oe_kanban_details">
                                     <strong class="o_kanban_record_title">
+                                        Название:
                                         <field name="display_name"/>
                                     </strong>
                                     <div t-if="record.author.value">
                                         Автор: <t t-esc="record.author.value"/>
                                     </div>
-                                     <div class="project_description" t-if="record.short_description.value" >
-                                        Описание: <t t-esc="record.short_description.value"/>
+                                    <div class="project_description" t-if="record.required_participants.value">
+                                        Необходимые участники: <field name="required_participants" widget="html" options="{'collaborative': true}"/>
                                     </div>
-                                    <style>.project_description{height:40px;width: 300px;white-space: pre-line;overflow-y: hidden;text-overflow: ellipsis;}</style>
+                                    <style>.project_description {
+                                        height: 100px;
+                                        width: 200px;
+                                        white-space: pre-line;
+                                        overflow-y: hidden;
+                                        text-overflow: ellipsis;
+                                    }</style>
                                     <div t-if="record.tag_ids.value">
                                         <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
                                     </div>
@@ -130,24 +155,62 @@
             </field>
         </record>
 
+
+        <record id="view_lp_project_group_by_status" model="ir.ui.view">
+            <field name="name">group_by_status</field>
+            <field name="model">lp.project</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="status" groups="learning_projects.lp_group_lecturer"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_lp_project_filter" model="ir.ui.view">
+            <field name="name">lp.project</field>
+            <field name="model">lp.project</field>
+            <field name="arch" type="xml">
+                <search string="Search Project">
+                    <field name="name" string="Проект"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Статус" name="group_status" context="{'group_by': 'status'}" groups="learning_projects.lp_group_lecturer"/>
+                        <filter string="Stage" name="group_stage_id" context="{'group_by': 'stage_id'}" groups="learning_projects.lp_group_lecturer"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
         <record id="action_nocontent_lp_project_management" model="ir.actions.act_window">
-            <field name="name">Project Management</field>
+            <field name="name">Управление проектами</field>
             <field name="res_model">lp.project</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">kanban,tree,form</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                    You haven't created any projects yet.
+                    Вы еще не создали ни одного проекта.
+                </p>
+            </field>
+        </record>
+
+        <record id="action_nocontent_lp_project_management_lecturer" model="ir.actions.act_window">
+            <field name="name">Управление проектами</field>
+            <field name="res_model">lp.project</field>
+            <field name="context">{'search_default_group_status': 1}</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Вы еще не создали ни одного проекта.
                 </p>
             </field>
         </record>
 
         <record id="action_nocontent_lp_project_management_bachelor" model="ir.actions.act_window">
-            <field name="name">Project Management</field>
+            <field name="name">Управление проектами</field>
             <field name="res_model">lp.project</field>
             <field name="view_mode">kanban,tree,form</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                    You haven't created any projects yet.
+                    Вы еще не создали ни одного проекта.
                 </p>
             </field>
         </record>

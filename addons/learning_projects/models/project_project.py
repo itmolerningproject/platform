@@ -55,3 +55,26 @@ class Project(models.Model):
         })
         action['context'] = context
         return action
+
+
+class Task(models.Model):
+    _inherit = "project.task"
+
+    user_ids = fields.Many2many('res.users', relation='project_task_user_rel', column1='task_id', column2='user_id', string='Assignees', context={'active_test': False}, tracking=True)
+    project_id = fields.Many2one('project.project', string='Project', recursive=True, compute='_compute_project_id', store=True, readonly=False, precompute=True, index=True, tracking=True,
+                                 check_company=True, change_default=False, domain="_onchange_project_id")
+
+    @api.onchange('project_id', 'user_ids')
+    def _onchange_project_id(self):
+        invited_partner_ids = self.project_id.message_partner_ids.ids
+        return {'domain': {'user_ids': [('partner_id', 'in', invited_partner_ids)]}}
+
+    @api.model
+    def create(self, vals):
+        task = super(Task, self).create(vals)
+        invited_partner_ids = task.message_partner_ids.ids
+        if task.user_ids:
+            for user in vals.get("user_ids"):
+                if user not in invited_partner_ids:
+                    raise ValidationError('Этот пользователь не имеет доступа')
+        return task

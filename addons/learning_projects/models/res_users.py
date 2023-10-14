@@ -9,6 +9,12 @@ _logger = logging.getLogger(__name__)
 class ResUsers(models.Model):
     _inherit = 'res.users'
 
+    def get_group_external_ids(self):
+        group_names = []
+        for group in self.groups_id:
+            group_names.append(group.name)
+        return group_names
+
     def action_invite_user(self):
         """ create signup token for each user, and send their signup url by email """
         if self.env.context.get('install_mode', False):

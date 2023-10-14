@@ -4,7 +4,6 @@
         <menuitem id="lp_menu" name="Learning Projects"/>
 
 
-
         <!-- Projects
         <act_window id="action_project_project"
                     name="Projects"
@@ -18,16 +17,29 @@
                   sequence="1"/>-->
 
         <!-- Lecturer and Master-->
-        <menuitem id="menuitem_lp_project_lecturer_master"
+        <menuitem id="menuitem_lp_project_master"
                   name="Проекты"
                   action="action_nocontent_lp_project_management"
                   parent="lp_menu"
-                  sequence="0" groups="learning_projects.lp_group_lecturer,learning_projects.lp_group_master,learning_projects.lp_group_admin"/>
+                  sequence="0" groups="learning_projects.lp_group_master"/>
 
         <menuitem name="Доски"
-                  id="project_lecturer_master"
+                  id="project_master"
                   action="project.open_view_project_all"
-                  parent="lp_menu" groups="learning_projects.lp_group_lecturer,learning_projects.lp_group_master,learning_projects.lp_group_admin"
+                  parent="lp_menu" groups="learning_projects.lp_group_master"
+                  sequence="2"/>
+        
+        <menuitem id="menuitem_lp_project_lecturer_admin"
+                  name="Проекты"
+                  action="action_nocontent_lp_project_management_lecturer"
+                  parent="lp_menu"
+                  sequence="0" groups="learning_projects.lp_group_lecturer,learning_projects.lp_group_admin"/>
+
+
+        <menuitem name="Доски"
+                  id="project_lecturer"
+                  action="project.open_view_project_all_group_stage"
+                  parent="lp_menu" groups="learning_projects.lp_group_lecturer,learning_projects.lp_group_admin"
                   sequence="2"/>
 
         <menuitem id="menuitem_lp_resume_lecture_master"

@@ -12,9 +12,6 @@
                         </tree>
                     </page>
                 </xpath>
-                <field name="name" position="after">
-                    <field name="is_admin" invisible="1"/>
-                </field>
             </field>
         </record>
 

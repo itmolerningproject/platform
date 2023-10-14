@@ -3,7 +3,7 @@
     <data>
 
         <record id="lp_resume_form" model="ir.ui.view">
-            <field name="name">Resume Details</field>
+            <field name="name">Детали Резюме</field>
             <field name="model">lp.resume</field>
             <field name="arch" type="xml">
                 <form string="Резюме">
@@ -27,10 +27,10 @@
         </record>
 
         <record id="lp_resume_tree" model="ir.ui.view">
-            <field name="name">Resume</field>
+            <field name="name">Резюме</field>
             <field name="model">lp.resume</field>
             <field name="arch" type="xml">
-                <tree string="Project Details Tree">
+                <tree string="Резюме Таблица">
                     <field name="author"/>
                     <field name="skills" widget="many2many_tags" options="{'color_field': 'color'}" placeholder="С++..."/>
                     <field name="areas_of_interest" widget="many2many_tags" options="{'color_field': 'color'}" placeholder="Медицина..."/>
@@ -39,7 +39,7 @@
         </record>
 
         <record id="view_lp_resume_kanban" model="ir.ui.view">
-            <field name="name">LP Resume Kanban</field>
+            <field name="name">Резюме Kanban</field>
             <field name="model">lp.resume</field>
             <field name="arch" type="xml">
                 <!-- Add or modify kanban cards here -->
@@ -47,7 +47,7 @@
                     <field name="author"/>
                     <field name="name"/>
                     <field name="group"/>
-                    <field name="short_description"/>
+                    <field name="short_description" type="html" options="{'collaborative': true}" placeholder="O себе и опыт..."/>
                     <field name="skills"/>
                     <field name="areas_of_interest"/>
                     <templates>
@@ -67,13 +67,18 @@
                                     <div t-if="record.author.value">
                                         Автор: <t t-esc="record.author.value"/>
                                     </div>
-                                     <div class="resume_description" t-if="record.short_description.value" >
+                                    <div class="resume_description" t-if="record.short_description.value">
                                         О себе: <t t-esc="record.short_description.value"/>
                                     </div>
-                                    <style>.resume_description{height:40px;width: 300px;white-space: pre-line;overflow-y: hidden;text-overflow: ellipsis;}</style>
+                                    <style>.resume_description {
+                                        height: 40px;
+                                        width: 200px;
+                                        white-space: pre-line;
+                                        overflow-y: hidden;
+                                        text-overflow: ellipsis;
+                                    }</style>
                                     <div t-if="record.skills.value">
-                                        <field name="skills" widget="many2many_tags"
-                                               options="{'color_field': 'color', 'no_create_edit': False}"/>
+                                        <field name="skills" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': False}"/>
                                     </div>
                                 </div>
 
@@ -90,7 +95,7 @@
             <field name="view_mode">kanban,tree,form</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
-                    You haven't created any resume yet.
+                    Вы еще не создали ни одного резюме.
                 </p>
             </field>
         </record>

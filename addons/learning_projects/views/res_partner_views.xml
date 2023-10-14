@@ -7,6 +7,16 @@
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="model">res.partner</field>
             <field name="arch" type="xml">
+                <xpath expr="//form//sheet" position="before">
+                    <field name="is_admin" invisible="1"/>
+                    <field name="is_master" invisible="1"/>
+                    <field name="is_bachelor" invisible="1"/>
+                    <field name="is_lecturer" invisible="1"/>
+                    <header>
+                        <button string="Поствавить оценку" type="object" name="action_score_lecturer" class="oe_highlight" groups="learning_projects.lp_group_lecturer"
+                                attrs="{'invisible': ['&amp;',('document_ids', '!=', False), ('is_lecturer','!=',False)]}"/>
+                    </header>
+                </xpath>
                 <xpath expr="//sheet/group" position="replace">
                     <group>
                         <group>
@@ -32,14 +42,18 @@
                         <group>
                             <field name="user_ids" invisible="1"/>
                             <field name="active_lang_count" invisible="1"/>
-                            <field name="academic_degree" groups="learning_projects.lp_group_master,learning_projects.lp_group_bachelor" />
+                            <field name="academic_degree" groups="learning_projects.lp_group_master,learning_projects.lp_group_bachelor"/>
                             <field name="email" widget="email" context="{'gravatar_image': True}" attrs="{'required': [('user_ids','!=', [])]}"/>
+                            <field name="telegram_url" widget="url"/>
                             <field name="number_groups" groups="learning_projects.lp_group_master,learning_projects.lp_group_bachelor"/>
                             <field name="lang" attrs="{'invisible': [('active_lang_count', '&lt;=', 1)]}"/>
                         </group>
                         <group string="Проект">
                             <field name="in_project"/>
                             <field name="lp_project_id"/>
+                            <field name="score_lecturer"/>
+                            <field name="score_master"/>
+                            <field name="document_ids" widget="many2many_binary"/>
                         </group>
                         <group string="Роли">
                             <field name="is_admin"/>
@@ -67,24 +81,48 @@
             </field>
         </record>
 
-        <!--<record model="ir.ui.view" id="res_partner_kanban_view">
-            <field name="name">res.partner.kanban.rent.management</field>
-            <field name="model">res.partner</field>
-            <field name="inherit_id" ref="base.res_partner_kanban_view"/>
-            <field name="arch" type="xml">
-                <data>
-
-                </data>
-            </field>
-        </record>-->
-
         <record id="view_search_partners" model="ir.ui.view">
             <field name="name">Partners Filters</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_res_partner_filter"/>
             <field name="arch" type="xml">
-                <xpath expr="//search/filter[@name='type_company']" position="after">
+                <xpath expr="//search" position="replace">
+                    <search string="Search Partner">
+                        <field name="name"/>
+                        <field name="ear"/>
+                        <field name="number_groups"/>
+                        <field name="potok"/>
+                        <field name="lp_project_id"/>
+
+                        <filter name="filter_admin"
+                                string="Admin"
+                                domain="[('is_admin','=',True)]"/>
+                        <filter name="filter_lecturer"
+                                string="Преподаватель"
+                                domain="[('is_lecturer','=',True)]"/>
+                        <filter name="filter_master"
+                                string="Магистр"
+                                domain="[('is_master','=',True)]"/>
+                        <filter name="filter_bachelor"
+                                string="Бакалавр"
+                                domain="[('is_bachelor','=',True)]"/>
+                        <separator/>
+                        <filter name="in_project_filter"
+                                string="Уже в проекте"
+                                domain="[('in_project', '=', True)]"/>
+                        <filter name="not_in_project_filter"
+                                string="Не проекте"
+                                domain="[('in_project', '!=', True)]"/>
+                        <separator/>
+                        <group expand="0" string="Group By">
+                            <filter string="Проект" name="group_lp_project_id" context="{'group_by': 'lp_project_id'}"/>
+                            <filter string="Поток" name="group_potok" context="{'group_by': 'potok'}"/>
+                            <filter string="Группа" name="group_number_groups" context="{'group_by': 'number_groups'}"/>
+                            <filter string="Год" name="group_ear" context="{'group_by': 'ear'}"/>
+                        </group>
+                    </search>
                 </xpath>
+
             </field>
         </record>
 
@@ -108,7 +146,10 @@
                     <attribute name="delete">false</attribute>
                 </xpath>
                 <field name="phone" position="replace">
-                    <field name="phone" invisible="1"/>
+                    <field name="lp_project_id"/>
+                    <field name="score_lecturer"/>
+                    <field name="score_master"/>
+                    <field name="document_ids" widget="many2many_binary"/>
                 </field>
                 <field name="email" position="replace">
                     <field name="email" invisible="1"/>
@@ -122,7 +163,9 @@
                 <field name="country_id" position="replace">
                     <field name="country_id" invisible="1"/>
                 </field>
-
+                <field name="city" position="replace">
+                    <field name="city" invisible="1"/>
+                </field>
             </field>
         </record>
 
