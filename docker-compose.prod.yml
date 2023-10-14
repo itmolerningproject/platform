@@ -46,9 +46,6 @@ services:
       - ./data/odoo:/var/lib/odoo
       - ./config/odoo.prod.conf:/etc/odoo/odoo.conf
       - ./addons:/mnt/extra-addons
-    depends_on:
-      - vpn
-      - dps
 
 
   postgres:
