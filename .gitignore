@@ -1,4 +1,5 @@
 ../.idea
+/.idea/*
 *.iml
 /data
 web-data/backend/static/
@@ -9,3 +10,4 @@ web-data/odoo/.local
 traefik
 strapi-dump
 tmp
+
