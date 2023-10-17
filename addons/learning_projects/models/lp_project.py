@@ -36,6 +36,7 @@ class LpProject(models.Model):
     project = fields.Many2one('project.project', string='Канбан', readonly=True, tracking=True)
     stage_id = fields.Many2one(related='project.stage_id', string='Статус', readonly=True, tracking=True)
     tag_ids = fields.Many2many(related='project.tag_ids', string='Навыки', tracking=True)
+    note = fields.Many2many('note.note', string='Записки', tracking=True)
 
     # Team
     message_partner_ids = fields.Many2many(related='project.message_partner_ids', string='message_follower_ids', readonly=True, tracking=True)

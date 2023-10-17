@@ -4,7 +4,6 @@
     <record id="project_project_stage_5" model="project.project.stage">
         <field name="sequence">1</field>
         <field name="name">Не подвержденные</field>
-        <field name="fold" eval="True"/>
     </record>
 
     <record id="project_project_stage_6" model="project.project.stage">

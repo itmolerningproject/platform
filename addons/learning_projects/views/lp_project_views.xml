@@ -11,9 +11,9 @@
                         <field name="id" invisible="True"/>
                         <field name="status" invisible="True"/>
                         <field name="project" invisible="True"/>
-                        <button name="send_confirm_project" string="Send confirm" type="object"
+                        <button name="send_confirm_project" string="Отправить на утверждение" type="object"
                                 attrs="{'invisible': [('status', '!=', 'Unconfirmed')]}" groups="learning_projects.lp_group_master, learning_projects.lp_group_admin"/>
-                        <button name="confirm_project" string="Confirm project" type="object"
+                        <button name="confirm_project" string="Утвердить проект" type="object"
                                 attrs="{'invisible': [('status', '!=', 'OnApproval')]}" groups="learning_projects.lp_group_lecturer, learning_projects.lp_group_admin"/>
                         <button name="action_view_tasks" string="Открыть канбан-доску" type="object" invisible="True" context="{'id': project}"/>
                         <button name="action_team_is_ready" string="Готовы к защите" type="object" attrs="{'invisible': [('status', '!=', 'Teamwork')]}"
@@ -64,9 +64,9 @@
                                         <field name="score_lecturer"/>
                                         <field name="score_master"/>
                                         <field name="document_ids"/>
-                                        <button string="Поствавить оценку" type="object" name="action_score_master" class="oe_highlight" groups="learning_projects.lp_group_master"
+                                        <button string="Поставить оценку" type="object" name="action_score_master" class="oe_highlight" groups="learning_projects.lp_group_master"
                                                 attrs="{'invisible': ['&amp;',('document_ids', '!=', False), ('is_bachelor', '!=', True )]}"/>
-                                        <button string="Поствавить оценку" type="object" name="action_score_lecturer" class="oe_highlight" groups="learning_projects.lp_group_lecturer"
+                                        <button string="Поставить оценку" type="object" name="action_score_lecturer" class="oe_highlight" groups="learning_projects.lp_group_lecturer"
                                                 attrs="{'invisible': [('document_ids', '!=', False)]}"/>
                                     </tree>
                                 </field>
@@ -84,6 +84,9 @@
                                     <field name="project"/>
                                     <field name="stage_id"/>
                                 </group>
+                            </page>
+                            <page string="Документация">
+                                <field name="note"/>
                             </page>
                         </notebook>
                     </sheet>
