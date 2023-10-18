@@ -15,6 +15,76 @@ class ResUsers(models.Model):
             group_names.append(group.name)
         return group_names
 
+    def get_group_external_ids(self):
+        group_names = []
+        for group in self.groups_id:
+            group_names.append(group.name)
+        return group_names
+
+    @api.model
+    def create(self, values):
+        # Call the original create method
+        user = super(ResUsers, self).create(values)
+
+        # Update related partners
+        partners = self.env['res.partner'].search([('id', '=', user.partner_id.id)])
+        v = {}
+        group_external_ids = user.get_group_external_ids()
+
+        if 'Admin' in group_external_ids:
+            v['is_admin'] = True
+        else:
+            v['is_admin'] = False
+        if 'Master' in group_external_ids:
+            v['is_master'] = True
+        else:
+            v['is_master'] = False
+        if 'Bachelor' in group_external_ids:
+            v['is_bachelor'] = True
+        else:
+            v['is_bachelor'] = False
+
+        if 'Lecturer' in group_external_ids:
+            v['is_lecturer'] = True
+        else:
+            v['is_lecturer'] = False
+
+        partners.write(v)
+
+        return user
+
+    def write(self, values):
+        # Call the original write method
+        res = super(ResUsers, self).write(values)
+
+        # Update related partners
+        for user in self:
+            partners = self.env['res.partner'].search([('id', '=', user.partner_id.id)])
+            v = {}
+            group_external_ids = user.get_group_external_ids()
+            if 'Admin' in group_external_ids:
+                v['is_admin'] = True
+            else:
+                v['is_admin'] = False
+            if 'Master' in group_external_ids:
+                v['is_master'] = True
+            else:
+                v['is_master'] = False
+            if 'Bachelor' in group_external_ids:
+                v['is_bachelor'] = True
+            else:
+                v['is_bachelor'] = False
+
+            if 'Lecturer' in group_external_ids:
+                v['is_lecturer'] = True
+            else:
+                v['is_lecturer'] = False
+
+
+            partners.write(v)
+
+        return res
+
     def action_invite_user(self):
         """ create signup token for each user, and send their signup url by email """
         if self.env.context.get('install_mode', False):

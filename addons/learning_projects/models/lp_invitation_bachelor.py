@@ -40,6 +40,7 @@ class InvitationBachelor(models.Model):
     resume = fields.Many2one('lp.resume', string="Резюме", required=True)  # compute='_compute_resume',
     resume_author = fields.Many2one(related='resume.author', string="Отправитель", store=True, readonly=True)
     number_groups = fields.Char(related='resume_author.number_groups', string="Группа", readonly=True)
+    motivation = fields.Html(string='Почему этот проект?', sanitize_attributes=False, tracking=True)
 
     invited_by = fields.Many2one('res.partner', string="Приглашён кем", readonly=True, tracking=True)
     invited_status = fields.Selection(STATUS, string="Статус", default="draft", readonly=True, tracking=True)

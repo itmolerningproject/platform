@@ -68,10 +68,10 @@
                                         Автор: <t t-esc="record.author.value"/>
                                     </div>
                                     <div class="resume_description" t-if="record.short_description.value">
-                                        О себе: <t t-esc="record.short_description.value"/>
+                                        О себе: <field name="short_description" widget="html" options="{'collaborative': true}"/>
                                     </div>
                                     <style>.resume_description {
-                                        height: 40px;
+                                        height: 100px;
                                         width: 200px;
                                         white-space: pre-line;
                                         overflow-y: hidden;

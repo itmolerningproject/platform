@@ -56,6 +56,8 @@ class Partner(models.Model):
     is_bachelor = fields.Boolean(compute='_compute_get_is_bachelor', store=True)
     is_lecturer = fields.Boolean(compute='_compute_get_is_lecturer', store=True)
 
+
+    @api.depends('create_date')
     def _compute_get_is_admin(self):
         for rec in self:
             user = self.env['res.users'].search([('partner_id', '=', rec.id)], limit=1)
@@ -64,6 +66,7 @@ class Partner(models.Model):
             if 'Admin' in group_external_ids:
                 rec.is_admin = True
 
+    @api.depends('create_date')
     def _compute_get_is_master(self):
         for rec in self:
             user = self.env['res.users'].search([('partner_id', '=', rec.id)], limit=1)
@@ -72,6 +75,7 @@ class Partner(models.Model):
             if 'Master' in group_external_ids:
                 rec.is_master = True
 
+    @api.depends('create_date')
     def _compute_get_is_bachelor(self):
         for rec in self:
             user = self.env['res.users'].search([('partner_id', '=', rec.id)], limit=1)
@@ -80,6 +84,7 @@ class Partner(models.Model):
             if 'Bachelor' in group_external_ids:
                 rec.is_bachelor = True
 
+    @api.depends('create_date')
     def _compute_get_is_lecturer(self):
         for rec in self:
             user = self.env['res.users'].search([('partner_id', '=', rec.id)], limit=1)
