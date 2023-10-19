@@ -12,7 +12,7 @@
                         <field name="status" invisible="True"/>
                         <field name="project" invisible="True"/>
                         <button name="send_confirm_project" string="Отправить на утверждение" type="object"
-                                attrs="{'invisible': [('status', '!=', 'Unconfirmed')]}" groups="learning_projects.lp_group_master, learning_projects.lp_group_admin"/>
+                                attrs="{'invisible': [('status', '!=', 'Unconfirmed')]}" groups="learning_projects.lp_group_master"/>
                         <button name="confirm_project" string="Утвердить проект" type="object"
                                 attrs="{'invisible': [('status', '!=', 'OnApproval')]}" groups="learning_projects.lp_group_lecturer, learning_projects.lp_group_admin"/>
                         <button name="action_view_tasks" string="Открыть канбан-доску" type="object" invisible="True" context="{'id': project}"/>
@@ -46,8 +46,9 @@
                                         <field name="invited_status"/>
                                         <!-- todo hide -->
                                         <button name="action_confirm_invitation" string="Добавить участника" type="object"
-                                                attrs="{'invisible': ['|',('invited_status', '=', 'invited'), ('invited_status',  '=', 'invited_for_other_priority')]}"
-                                                groups="learning_projects.lp_group_master, learning_projects.lp_group_admin "/>
+                                                attrs="{'invisible': ['|',('invited_status', '=', 'invited'), ('invited_status', '=', 'invited_for_other_priority')]}"
+                                                groups="learning_projects.lp_group_master, learning_projects.lp_group_admin "
+                                                confirm="Вы уверены?"/>
                                     </tree>
                                 </field>
                             </page>
@@ -141,7 +142,7 @@
                                         Необходимые участники: <field name="required_participants" widget="html" options="{'collaborative': true}"/>
                                     </div>
                                     <style>.project_description {
-                                        height: 100px;
+                                        max-height: 100px;
                                         width: 200px;
                                         white-space: pre-line;
                                         overflow-y: hidden;

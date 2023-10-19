@@ -71,7 +71,7 @@
                                         О себе: <field name="short_description" widget="html" options="{'collaborative': true}"/>
                                     </div>
                                     <style>.resume_description {
-                                        height: 100px;
+                                        max-height: 100px;
                                         width: 200px;
                                         white-space: pre-line;
                                         overflow-y: hidden;

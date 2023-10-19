@@ -6,6 +6,7 @@ from odoo.addons.auth_signup.models.res_partner import now
 
 _logger = logging.getLogger(__name__)
 
+
 class ResUsers(models.Model):
     _inherit = 'res.users'
 
@@ -27,7 +28,7 @@ class ResUsers(models.Model):
         user = super(ResUsers, self).create(values)
 
         # Update related partners
-        partners = self.env['res.partner'].search([('id', '=', user.partner_id.id)])
+        partners = self.env['res.partner'].sudo().search([('id', '=', user.partner_id.id)])
         v = {}
         group_external_ids = user.get_group_external_ids()
 
@@ -49,7 +50,7 @@ class ResUsers(models.Model):
         else:
             v['is_lecturer'] = False
 
-        partners.write(v)
+        partners.sudo().write(v)
 
         return user
 
@@ -59,7 +60,7 @@ class ResUsers(models.Model):
 
         # Update related partners
         for user in self:
-            partners = self.env['res.partner'].search([('id', '=', user.partner_id.id)])
+            partners = self.env['res.partner'].sudo().search([('id', '=', user.partner_id.id)])
             v = {}
             group_external_ids = user.get_group_external_ids()
             if 'Admin' in group_external_ids:
@@ -80,8 +81,7 @@ class ResUsers(models.Model):
             else:
                 v['is_lecturer'] = False
 
-
-            partners.write(v)
+            partners.sudo().write(v)
 
         return res
 
@@ -125,6 +125,6 @@ class ResUsers(models.Model):
             email_values['email_to'] = user.email
             # TDE FIXME: make this template technical (qweb)
             with self.env.cr.savepoint():
-                force_send = not(self.env.context.get('import_file', False))
+                force_send = not (self.env.context.get('import_file', False))
                 template.send_mail(user.id, force_send=force_send, raise_exception=True, email_values=email_values)
             _logger.info("Invite user email sent for user <%s> to <%s>", user.login, user.email)
