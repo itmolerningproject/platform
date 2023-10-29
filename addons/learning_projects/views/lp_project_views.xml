@@ -40,13 +40,14 @@
                             <page string="Запросы на участие в проекте">
                                 <field name="invitation_bachelor_ids" default_order="priority asc" domain="[('create_uid','=',1)]">
                                     <tree>
+                                        <field name="is_all_invited" invisible="True"/>
                                         <field name="priority"/>
                                         <field name="resume"/>
                                         <field name="number_groups"/>
                                         <field name="invited_status"/>
                                         <!-- todo hide -->
                                         <button name="action_confirm_invitation" string="Добавить участника" type="object"
-                                                attrs="{'invisible': ['|',('invited_status', '=', 'invited'), ('invited_status', '=', 'invited_for_other_priority')]}"
+                                                attrs="{'invisible': ['|', ('is_all_invited' , '=', True), ('invited_status', 'in', ['invited','invited_for_other_priority']) ]}"
                                                 groups="learning_projects.lp_group_master, learning_projects.lp_group_admin "
                                                 confirm="Вы уверены?"/>
                                     </tree>

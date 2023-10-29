@@ -37,6 +37,7 @@ class InvitationBachelor(models.Model):
     # bachelor
     priority = fields.Integer(string="Приоритет", default=1, required=True)
     project_id = fields.Many2one('lp.project', string="Проект", required=True)
+    is_all_invited = fields.Boolean(related='project_id.is_all_invited', string="is_all_invited")
     resume = fields.Many2one('lp.resume', string="Резюме", required=True)  # compute='_compute_resume',
     resume_author = fields.Many2one(related='resume.author', string="Отправитель", store=True, readonly=True)
     number_groups = fields.Char(related='resume_author.number_groups', string="Группа", readonly=True)
@@ -114,14 +115,14 @@ class InvitationBachelor(models.Model):
 
         self.resume_author.sudo().write({'in_project': True, 'lp_project_id': lp_p.id})
 
-        self.write({
+        self.sudo().write({
             'invited_status': 'invited',
             'invited_by': self.env['res.users'].browse(self.env.uid).partner_id,
         })
 
         invitation = self.env['lp.invitation.bachelor'].search([('resume_author', '=', resume_author), ('id', '!=', self.id)], limit=1)
         if invitation is not None:
-            invitation.write({'invited_status': 'invited_for_other_priority'})
+            invitation.sudo().write({'invited_status': 'invited_for_other_priority'})
 
     def action_send_invitation(self):
         for invitation in self:

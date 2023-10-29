@@ -27,7 +27,7 @@ docker-compose -f docker-compose.$ENVIRONMENT.yml up -d
 ```
 
 ```
-
+git branch 
 git stash
 git pull
 
