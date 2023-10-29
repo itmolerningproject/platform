@@ -37,12 +37,28 @@
             <field name="model">lp.invitation.bachelor</field>
             <field name="arch" type="xml">
                 <tree string="Own Invitations Tree">
-                    <field name="priority" widget="handle" attrs="{'readonly':[('invited_status','!=','draft')]}"/>
+                    <field name="priority" widget="handle"  groups="learning_projects.lp_group_bachelor" attrs="{'readonly':[('invited_status','!=','draft')]}"/>
+                    <field name="priority" groups="learning_projects.lp_group_lecturer,learning_projects.lp_group_admin,learning_projects.lp_group_master" attrs="{'readonly':[('invited_status','!=','draft')]}"/>
                     <field name="project_id" attrs="{'readonly':[('invited_status','!=','draft')]}"/>
                     <field name="resume" attrs="{'readonly':[('invited_status','!=','draft')]}"/>
                     <field name="number_groups" attrs="{'readonly':[('invited_status','!=','draft')]}"/>
                     <field name="invited_status" attrs="{'readonly':[('invited_status','!=','draft')]}"/>
                 </tree>
+            </field>
+        </record>
+
+        <record id="view_lp_invitation_bachelor_filter" model="ir.ui.view">
+            <field name="name">lp.invitation.bachelor</field>
+            <field name="model">lp.invitation.bachelor</field>
+            <field name="arch" type="xml">
+                <search string="Search Project">
+                    <field name="project_id" string="Проект"/>
+                    <field name="number_groups" string="Проект"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Проект" name="group_project_id" context="{'group_by': 'project_id'}" groups="learning_projects.lp_group_lecturer,learning_projects.lp_group_admin,learning_projects.lp_group_master"/>
+                        <filter string="Резюме" name="group_resume" context="{'group_by': 'resume'}" groups="learning_projects.lp_group_lecturer,learning_projects.lp_group_admin,learning_projects.lp_group_master"/>
+                    </group>
+                </search>
             </field>
         </record>
 
@@ -52,6 +68,18 @@
             <field name="res_model">lp.invitation.bachelor</field>
             <field name="view_mode">tree,form</field>
             <field name="domain">[('create_uid', '=', uid)]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    You haven't created any invitation yet.
+                </p>
+            </field>
+        </record>
+
+        <record id="action_nocontent_lp_invitation" model="ir.actions.act_window">
+            <field name="name">Приглашения бакалавров</field>
+            <field name="res_model">lp.invitation.bachelor</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('create_uid', '!=', uid)]</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
                     You haven't created any invitation yet.

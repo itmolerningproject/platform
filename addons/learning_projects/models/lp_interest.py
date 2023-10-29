@@ -24,5 +24,5 @@ class Interest(models.Model):
         for record in self:
             if self.search_count([('id', '!=', record.id), ('name', '=', record.name)]) > 0:
                 raise ValidationError("Interest with this name already exists.")
-            if len(record.name) > 20:
+            if len(record.name) > 30:
                 raise ValidationError("Interest name max size 20 chars.")

@@ -166,7 +166,9 @@
             <field name="arch" type="xml">
                 <tree>
                     <field name="name"/>
-                    <field name="status" groups="learning_projects.lp_group_lecturer"/>
+                    <field name="status" groups="learning_projects.lp_group_lecturer,learning_projects.lp_group_admin"/>
+                    <field name="author" groups="learning_projects.lp_group_lecturer,learning_projects.lp_group_admin"/>
+                    <field name="invitation_bachelor_ids" groups="learning_projects.lp_group_lecturer,learning_projects.lp_group_admin" domain="[('create_uid','=',1)]"/>
                 </tree>
             </field>
         </record>

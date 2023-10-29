@@ -17,6 +17,7 @@
         'data/project_stage_data.xml',
         'data/automated_actions/project_status_sync_automated_action.xml',
         'data/automated_actions/project_stage_id_sync_automated_action.xml',
+        'data/automated_actions/project_task_action.xml',
         'data/smtp_maildev_server.xml',
         'views/res_partner_views.xml',
         'wizards/views/lp_score_master_wizard.xml',

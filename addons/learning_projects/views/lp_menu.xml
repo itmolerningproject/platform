@@ -57,7 +57,7 @@
 
         <menuitem id="menuitem_lp_invitation_lecturer_master"
                   name="Отклики бакалавров в проекты"
-                  action="action_nocontent_lp_invitation_bachelor"
+                  action="action_nocontent_lp_invitation"
                   parent="lp_menu"
                   sequence="5" groups="learning_projects.lp_group_lecturer,learning_projects.lp_group_master,learning_projects.lp_group_admin"/>
 
@@ -65,7 +65,7 @@
         <menuitem id="menuitem_configuration"
                   name="Конфигурация"
                   sequence="7"
-                  parent="lp_menu" groups="learning_projects.lp_group_admin"/>
+                  parent="lp_menu" groups="learning_projects.lp_group_admin,learning_projects.lp_group_lecturer"/>
 
         <menuitem id="menuitem_lp_interest"
                   name="Interest"

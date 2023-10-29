@@ -1,8 +1,7 @@
 import ast
-from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 from odoo.tools import config as odoo_conf
-
+from odoo import api, fields, models, _
 
 class Project(models.Model):
     _inherit = "project.project"
@@ -71,10 +70,4 @@ class Task(models.Model):
 
     @api.model
     def create(self, vals):
-        task = super(Task, self).create(vals)
-        invited_partner_ids = task.message_partner_ids.ids
-        if task.user_ids:
-            for user in vals.get("user_ids"):
-                if user not in invited_partner_ids:
-                    raise ValidationError('Этот пользователь не имеет доступа')
-        return task
+        return super(Task, self).create(vals)

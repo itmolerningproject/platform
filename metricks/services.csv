@@ -1,0 +1,5 @@
+CPU %,Memory %,Memory mb,Memory max,Disk %,Date/Time
+odoo16,0.01%,238.5MiB / 30.6GiB / 0.76%,2.94MB / 6.32MB,112MB / 0B,Up,2023-10-17 13:20:38.874958
+postgres,0.00%,110MiB / 30.6GiB / 0.35%,6.34MB / 2.86MB,123MB / 31.7MB,Up,2023-10-17 13:20:38.874958
+platform_pgadmin_1,0.04%,145.1MiB / 30.6GiB / 0.46%,77.3kB / 0B,62.6MB / 8.19kB,Up,2023-10-17 13:20:38.874958
+maildev,0.00%,48.73MiB / 30.6GiB / 0.16%,79kB / 580B,59.1MB / 0B,Up,2023-10-17 13:20:38.874958

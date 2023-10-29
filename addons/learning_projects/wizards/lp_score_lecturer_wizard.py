@@ -25,7 +25,7 @@ class ScoreMasterWizard(models.TransientModel):
 
     def action_confirm(self):
         self.author.sudo().write({
-            'score_master': self.score_master
+            'score_lecturer': self.score_master
         })
 
         return {'type': 'ir.actions.act_window_close'}

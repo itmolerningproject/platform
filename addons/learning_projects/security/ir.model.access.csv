@@ -26,6 +26,6 @@ access_ir_attachment_master,access.base.ir.attachment,base.model_ir_attachment,l
 access_lp_project_lecturer,access.lp.project,model_lp_project,lp_group_lecturer,1,1,0,0
 access_lp_interest_lecturer,access.lp.interest,model_lp_interest,lp_group_lecturer,1,1,1,0
 access_lp_resume_lecturer,access.lp.resume,model_lp_resume,lp_group_lecturer,1,0,0,0
-access_lp_invitation_bachelor_lecturer,access.lp.invitation.bachelor,model_lp_invitation_bachelor,lp_group_lecturer,1,0,0,0
+access_lp_invitation_bachelor_lecturer,access.lp.invitation.bachelor,model_lp_invitation_bachelor,lp_group_lecturer,1,1,0,0
 access_lp_score_lecturer_wizard_master,access.lp.score.lecturer.wizard,model_lp_score_lecturer_wizard,lp_group_lecturer,1,1,1,0
 access_ir_attachment_lecturer,access.base.ir.attachment,base.model_ir_attachment,lp_group_lecturer,1,0,1,0

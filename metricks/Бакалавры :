@@ -1,0 +1,26 @@
+Бакалавры :
+
+    18 октябоя: Готовили резюме. Поля
+    ФИО, Номер группы, Электронный адресс, поток, телеграм 
+
+    27 октябоя приглашаем в ситему
+    Этап сбеседывания.
+
+
+Магистры:
+    Этап сбеседывания.
+    17 Вотринки вечером перд презитация.
+    19 октября призенту я вой проект. Если собр
+    25-26 показывают свои проекты. Рекламируют.
+
+
+CONTAINER ID\t NAME                 CPU %     MEM USAGE / LIMIT     MEM %     NET I/O           BLOCK I/O         PIDS
+3d564466e8a6   platform-pgadmin-1   0.04%     108.6MiB / 957.5MiB   11.35%    1.56kB / 0B       119MB / 557kB     5
+34a1119433cc   maildev              0.89%     40.29MiB / 957.5MiB   4.21%     1.67kB / 0B       140MB / 0B        17
+62462329ee38   platform-nginx-1     0.03%     52.83MiB / 957.5MiB   5.52%     8.84MB / 7.23MB   181MB / 4.44MB    25
+eb68e9828300   postgres             0.03%     71.78MiB / 957.5MiB   7.50%     1.81MB / 2.61MB   251MB / 9.99MB    13
+7a2fe14a6bcf   ipsec-vpn-server     0.00%     3.938MiB / 957.5MiB   0.41%     1.2kB / 252B      46.4MB / 61.4kB   5
+e65d0330c832   odoo                 0.02%     113.4MiB / 957.5MiB   11.84%    2.72MB / 8.81MB   198MB / 16.4kB    6
+
+
+docker stats --no-stream --format 'table {{.Names}}\t{{.CPU %}}\t{{MEM USAGE / LIMIT}}\t{{MEM %}}\t{{NET I/O }}\t{{BLOCK I/O}}'
