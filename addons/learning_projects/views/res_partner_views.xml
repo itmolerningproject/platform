@@ -148,6 +148,9 @@
                     <attribute name="delete">false</attribute>
                 </xpath>
                 <field name="phone" position="replace">
+                    <field name="is_admin" invisible="1"/>
+                    <field name="is_lecturer" invisible="1"/>
+                    <field name="number_groups" attrs="{'invisible': ['|',('is_admin', '=', True), ('is_lecturer', '=', True)]}"/>
                     <field name="lp_project_id"/>
                     <field name="score_lecturer"/>
                     <field name="score_master"/>
