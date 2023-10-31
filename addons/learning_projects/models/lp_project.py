@@ -48,8 +48,12 @@ class LpProject(models.Model):
         for record in self:
             record.is_all_invited = record.current_value_users >= record.max_col_users
             if record.is_all_invited:
-                status = 'Teamwork'
-                record.write({'status': status})
+                record.sudo().write({'status': 'Teamwork'})
+
+                for invitation_id in record.invitation_bachelor_ids.ids:
+                    invitation = self.env['lp.invitation.bachelor'].browse(invitation_id)
+                    if invitation.invited_status == 'waiting':
+                        invitation.sudo().write({'invited_status': 'invited_all'})
 
     is_all_invited = fields.Boolean('Is All invited', compute='_compute_is_all_invited', store=True, readonly=True, tracking=True)
 

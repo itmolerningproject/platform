@@ -4,6 +4,7 @@ from odoo.exceptions import ValidationError
 STATUS = [
     ("draft", "Черновик"),
     ("waiting", "В ожидании"),
+    ("invited_all", "Проект уже сформирован"),
     ("invited", "Приглашен"),
     ("invited_for_other_priority", "Приглашен по другому приоритету"),
 ]
@@ -35,8 +36,8 @@ class InvitationBachelor(models.Model):
     user_id = fields.Many2one('res.users', string='User', default=lambda self: self.env.user)
 
     # bachelor
-    priority = fields.Integer(string="Приоритет", default=1, required=True)
-    project_id = fields.Many2one('lp.project', string="Проект", required=True)
+    priority = fields.Integer(string="Приоритет", default=1,  tracking=True, required=True)
+    project_id = fields.Many2one('lp.project', string="Проект",  tracking=True, required=True)
     is_all_invited = fields.Boolean(related='project_id.is_all_invited', string="is_all_invited")
     resume = fields.Many2one('lp.resume', string="Резюме", required=True)  # compute='_compute_resume',
     resume_author = fields.Many2one(related='resume.author', string="Отправитель", store=True, readonly=True)
@@ -124,6 +125,40 @@ class InvitationBachelor(models.Model):
         if invitation is not None:
             invitation.sudo().write({'invited_status': 'invited_for_other_priority'})
 
+    def action_reject_invitation(self):
+        resume_author = self.resume_author.id
+        lp_p = self.project_id
+        #if lp_p.is_all_invited:
+        #    raise ValidationError('Вы уже пригласили {max_col_users}'.format(max_col_users=lp_p.max_col_users))
+
+        lp_p.project.message_unsubscribe(partner_ids=[self.resume_author.id])
+
+        new_current_value_users = lp_p.current_value_users - 1
+        lp_p.project.sudo().write({'with_out': True})
+        if lp_p.is_all_invited:
+            lp_p.sudo().write({'current_value_users': new_current_value_users,
+                    'status': 'TeamFormation',
+                    "is_all_invited": False})
+
+            for invitation_id in lp_p.invitation_bachelor_ids.ids:
+                invitation = self.env['lp.invitation.bachelor'].browse(invitation_id)
+                if invitation.invited_status == 'invited_all':
+                    invitation.sudo().write({'invited_status': 'waiting'})
+        else:
+            lp_p.sudo().write({'current_value_users': new_current_value_users})
+
+        lp_p.project.sudo().write({'with_out': False})
+
+        self.resume_author.sudo().write({'in_project': False, 'lp_project_id': False})
+        self.sudo().write({
+            'invited_status': 'waiting',
+            'invited_by': False,
+        })
+
+        invitation = self.env['lp.invitation.bachelor'].search([('resume_author', '=', resume_author), ('id', '!=', self.id)], limit=1)
+        if invitation is not None:
+            invitation.sudo().write({'invited_status': 'waiting'})
+
     def action_send_invitation(self):
         for invitation in self:
             show_warning = False
@@ -140,7 +175,7 @@ class InvitationBachelor(models.Model):
     def action_draft_invitation(self):
         for invitation in self:
             show_warning = False
-            if invitation.invited_status == "waiting":
+            if invitation.invited_status == "waiting" or invitation.invited_status == "invited_all":
                 invitation.sudo().write({'invited_status': 'draft'})
             else:
                 show_warning = True

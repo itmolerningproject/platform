@@ -8,6 +8,7 @@ class Project(models.Model):
 
     # Create team chat
     # mail.channel
+    with_out = fields.Boolean('Is All invited', readonly=True, default=False)
 
     # visibility all for followers
     privacy_visibility = fields.Selection([
@@ -34,9 +35,10 @@ class Project(models.Model):
         return super(Project, self).create(vals)
 
     def write(self, vals):
-        user = self.env['res.users'].search([('id', '=', self.env.uid)], limit=1)
-        if (user.partner_id.is_master and vals.get('stage_id') == int(odoo_conf['project_stage_3_id'])) or (user.partner_id.is_master and vals.get('stage_id') == int(odoo_conf['project_stage_6_id'])):
-            raise ValidationError("Это может сделать только преподаватель")
+        if not self.with_out:
+            user = self.env['res.users'].search([('id', '=', self.env.uid)], limit=1)
+            if ((user.partner_id.is_master and vals.get('stage_id') == int(odoo_conf['project_stage_3_id'])) or (user.partner_id.is_master and vals.get('stage_id') == int(odoo_conf['project_stage_6_id']))):
+                raise ValidationError("Это может сделать только преподаватель")
         return super(Project, self).write(vals)
 
     def action_view_tasks(self):
