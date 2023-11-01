@@ -19,6 +19,8 @@
                         <button name="action_team_is_ready" string="Готовы к защите" type="object" attrs="{'invisible': [('status', '!=', 'Teamwork')]}"
                                 groups="learning_projects.lp_group_master, learning_projects.lp_group_admin"/>
                         <button string="Загрузить отчёт" type="action" name="%(learning_projects.load_document_wizard)d" class="oe_highlight" attrs="{'invisible': [('status', '!=', 'Teamwork')]}"/>
+                        <button string="Отправить в работу проект" type="object" groups="learning_projects.lp_group_admin" name="set_work_project" class="oe_highlight"
+                                attrs="{'invisible': [('status', '!=', 'TeamFormation')]}"/>
                     </header>
                     <sheet>
                         <field name="logo" widget="image" class="oe_avatar"/>
@@ -49,11 +51,11 @@
                                         <!-- todo hide -->
                                         <button name="action_confirm_invitation" string="Добавить участника" type="object"
                                                 attrs="{'invisible': ['|', ('is_all_invited' , '=', True), ('invited_status', 'in', ['invited','invited_for_other_priority']) ]}"
-                                                groups="learning_projects.lp_group_master, learning_projects.lp_group_admin "
+                                                groups="learning_projects.lp_group_master, learning_projects.lp_group_admin"
                                                 confirm="Вы уверены?"/>
                                         <button name="action_reject_invitation" string="Отклонить участника" type="object"
                                                 attrs="{'invisible': [('invited_status', 'not in', ['invited']) ]}"
-                                                groups="learning_projects.lp_group_master, learning_projects.lp_group_admin "
+                                                groups="learning_projects.lp_group_master, learning_projects.lp_group_admin"
                                                 confirm="Вы уверены?"/>
                                     </tree>
                                 </field>

@@ -21,7 +21,6 @@
                             <field name="resume" attrs="{'readonly':[('invited_status','!=','draft')]}"/>
                             <field name="motivation" widget="html" options="{'collaborative': true}" attrs="{'readonly':[('invited_status','!=','draft')]}"/>
                             <field name="resume_author"/>
-
                         </group>
                     </sheet>
                     <div class="oe_chatter">

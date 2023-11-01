@@ -93,6 +93,10 @@ class LpProject(models.Model):
         else:
             self.write({'status': 'OnApproval'})
 
+    def set_work_project(self):
+        for project in self:
+            project.sudo().write({'max_col_users': project.current_value_users})
+
     def confirm_project(self):
         partner = self.env['res.users'].browse(self.env.uid).partner_id
         return self.write({'status': 'TeamFormation',
